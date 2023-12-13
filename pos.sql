@@ -1,0 +1,75 @@
+CREATE TABLE IF NOT EXISTS SChat (
+    ID SERIAL PRIMARY KEY,
+    ChatName TEXT,
+    ChatLanguage TEXT,
+    ChatDescription TEXT,
+    ChatImage TEXT,
+    ChatCreatedAt TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS SMessage (
+    ID SERIAL PRIMARY KEY,
+    MessageText TEXT,
+    QuotedMsgID INT
+);
+
+CREATE TABLE IF NOT EXISTS SUser (
+    ID SERIAL PRIMARY KEY,
+    UserName TEXT,
+    UserEmail TEXT
+);
+
+CREATE TABLE IF NOT EXISTS SMessageInChat (
+    ID SERIAL PRIMARY KEY,
+    MessageID INT,
+    ChatID INT,
+    FOREIGN KEY (MessageID) REFERENCES SMessage(ID),
+    FOREIGN KEY (ChatID) REFERENCES SChat(ID)
+);
+
+CREATE TABLE IF NOT EXISTS SMessageOfUser (
+    ID SERIAL PRIMARY KEY,
+    MessageID INT,
+    UserID INT,
+    FOREIGN KEY (MessageID) REFERENCES SMessage(ID),
+    FOREIGN KEY (UserID) REFERENCES SUser(ID)
+);
+
+CREATE TABLE IF NOT EXISTS SUserInChat (
+    ID SERIAL PRIMARY KEY,
+    ChatID INT,
+    UserID INT,
+    FOREIGN KEY (ChatID) REFERENCES SChat(ID),
+    FOREIGN KEY (UserID) REFERENCES SUser(ID)
+);
+
+CREATE TABLE IF NOT EXISTS SReactionToMessage (
+    ID SERIAL PRIMARY KEY,
+    MessageID INT,
+    ReactedUserID INT,
+    Reaction TEXT,
+    FOREIGN KEY (MessageID) REFERENCES SMessage(ID),
+    FOREIGN KEY (ReactedUserID) REFERENCES SUser(ID)
+);
+
+CREATE TABLE IF NOT EXISTS SToken (
+	ID SERIAL PRIMARY KEY,
+	Token TEXT,
+	Expiry Timestamp
+);
+
+CREATE TABLE IF NOT EXISTS SChatAdmin (
+	ID SERIAL PRIMARY KEY,
+	UserInChatID INT,
+	FOREIGN KEY (UserInChatID) REFERENCES SUserInChat(ID)
+);
+
+CREATE TABLE IF NOT EXISTS SPassword (
+	ID SERIAL PRIMARY KEY,
+	EncryptedData TEXT
+);
+
+CREATE TABLE IF NOT EXISTS SPasswordUser (
+	ID SERIAL PRIMARY KEY,
+	EncryptedData TEXT
+);

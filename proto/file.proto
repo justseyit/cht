@@ -1,0 +1,293 @@
+syntax = "proto3";
+
+package chatservice;
+option go_package = "pgenerated/";
+
+message Message {
+    int32 id = 1;
+    string messageText = 2;
+    int32 quotedMessageID = 3;
+}
+
+message Chat {
+    int32 id = 1;
+    string chatName = 2;
+    string chatLanguage = 3;
+    string chatDescription = 4;
+    string chatImage = 5;
+    string chatCreatedAt = 6;
+}
+
+message User {
+    int32 id = 1;
+    string username = 2;
+    string userEmail = 3;
+}
+
+message Password {
+    int32 id = 1;
+    string encryptedData = 3;
+}
+
+message MessageInChat {
+    int32 id = 1;
+    int32 chatID = 2;
+    int32 messageID = 3;
+}
+
+message MessageOfUser {
+    int32 id = 1;
+    int32 userID = 2;
+    int32 messageID = 3;
+}
+
+message UserInChat {
+    int32 id = 1;
+    int32 userID = 2;
+    int32 chatID = 3;
+}
+
+message ReactionToMessage {
+    int32 id = 1;
+    int32 reactedUserID = 2;
+    int32 messageID = 3;
+    string reaction = 4;
+}
+
+message ChatAdmin {
+    int32 id = 1;
+    int32 userInChatID = 2;
+}
+
+message PasswordUser {
+    int32 id = 1;
+    int32 userID = 2;
+    int32 passwordID = 3;
+}
+
+message FilledChat {
+    repeated Message messages = 1;
+}
+
+message MsgStream {
+    repeated FilledChat filledChats = 1;
+}
+
+message StreamByUser {
+    int32 id = 1;
+    MsgStream msgStream = 2;
+}
+
+message RequestSendMessage {
+    int32 id = 1;
+    Message message = 2;
+    int32 userID = 3;
+    int32 chatID = 4;
+}
+
+message RequestUserLogin {
+    int32 id = 1;
+    string userEmail = 2;
+    string userPassword = 3;
+}
+
+message RequestUserRegister {
+    int32 id = 1;
+    string username = 2;
+    string userEmail = 3;
+    string userPassword = 4;
+}
+
+message RequestUserLogout {
+    int32 id = 1;
+    int32 userID = 2;
+}
+
+message RequestCreateChat {
+    int32 id = 1;
+    Chat chat = 2;
+    int32 userID = 3;
+}
+
+message RequestAddUserToChat {
+    int32 id = 1;
+    int32 userID = 2;
+    int32 chatID = 3;
+}
+
+message RequestReactMessage {
+    int32 id = 1;
+    int32 messageID = 3;
+    ReactionToMessage reactionToMessage = 2;
+}
+
+message RequestUnreactMessage {
+    int32 id = 1;
+    int32 messageID = 3;
+    ReactionToMessage reactionToMessage = 2;
+}
+
+message RequestGetMessagesByChat {
+    int32 id = 1;
+    int32 chatID = 2;
+}
+
+message RequestGetUsersByChat {
+    int32 id = 1;
+    int32 chatID = 2;
+}
+
+message RequestGetChatsByUser {
+    int32 id = 1;
+    int32 userID = 2;
+}
+
+message RequestRemoveUserFromChat {
+    int32 id = 1;
+    int32 userInChatID = 2;
+}
+
+message RequestMakeUserAdmin {
+    int32 id = 1;
+    int32 userInChatID = 2;
+}
+
+message RequestRemoveUserAdmin {
+    int32 id = 1;
+    int32 userInChatID = 2;
+}
+
+message RequestUpdateChat {
+    int32 id = 1;
+    Chat chat = 2;
+}
+
+message ResponseUserRegister {
+    int32 id = 1;
+    User user = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseUserLogin {
+    int32 id = 1;
+    User user = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseUserLogout {
+    int32 id = 1;
+    string message = 2;
+    bool success = 3;
+}
+
+message ResponseGetUsersByChat {
+    int32 id = 1;
+    repeated User users = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseGetMessagesByChat {
+    int32 id = 1;
+    repeated Message messages = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseGetChatsByUser {
+    int32 id = 1;
+    repeated Chat chats = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseSendMessage {
+    int32 id = 1;
+    Message messageSent = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseCreateChat {
+    int32 id = 1;
+    Chat chat = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseAddUserToChat {
+    int32 id = 1;
+    UserInChat userInChat = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseReactMessage {
+    int32 id = 1;
+    ReactionToMessage reactionToMessage = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseUnreactMessage {
+    int32 id = 1;
+    ReactionToMessage reactionToMessage = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseRemoveUserFromChat {
+    int32 id = 1;
+    UserInChat userInChat = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseMakeUserAdmin {
+    int32 id = 1;
+    UserInChat userInChat = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseRemoveUserAdmin {
+    int32 id = 1;
+    UserInChat userInChat = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message ResponseUpdateChat {
+    int32 id = 1;
+    Chat chat = 2;
+    string message = 3;
+    bool success = 4;
+}
+
+message Empty {}
+
+
+service ChatService {
+    rpc SubscribeByUser (User) returns (stream StreamByUser) {}
+    rpc SendMessageToChat (RequestSendMessage) returns (ResponseSendMessage) {}
+    rpc CreateChat (RequestCreateChat) returns (ResponseCreateChat) {}
+    rpc UpdateChat (RequestUpdateChat) returns (ResponseUpdateChat) {}
+    rpc GetChatsByUser (RequestGetChatsByUser) returns (ResponseGetChatsByUser) {}
+    rpc GetUsersByChat (RequestGetUsersByChat) returns (ResponseGetUsersByChat) {}
+    rpc GetMessagesByChat (RequestGetMessagesByChat) returns (ResponseGetMessagesByChat) {}
+    rpc AddUserToChat (RequestAddUserToChat) returns (ResponseAddUserToChat) {}
+    rpc RemoveUserFromChat (RequestRemoveUserFromChat) returns (ResponseRemoveUserFromChat) {}
+    rpc MakeUserAdmin (RequestMakeUserAdmin) returns (ResponseMakeUserAdmin) {}
+    rpc RemoveUserAdmin (RequestRemoveUserAdmin) returns (ResponseRemoveUserAdmin) {}
+    rpc RequestReactAMessage (RequestReactMessage) returns (ResponseReactMessage) {}
+    rpc RequestUnreactAMessage (RequestUnreactMessage) returns (ResponseUnreactMessage) {}
+    rpc Disconnect (Empty) returns (Empty) {}
+}
+
+service AuthService {
+    rpc Login (RequestUserLogin) returns (User) {}
+    rpc Register (RequestUserRegister) returns (User) {}
+    rpc Logout (RequestUserLogout) returns (Empty) {}
+}
